@@ -1,0 +1,51 @@
+from flask import Flask,request,jsonify
+import management
+import spartan
+flask_object = Flask(__name__)
+
+@flask_object.route("/",methods = ["GET"])#1-  method: GET, route: /
+def home_page():
+    welcome = "Welcome to the Devops Server\n"
+    tutorial = ("\nAPI is an interface that allows your application to interact with an external service using a simple set of commands.\n You do not need to know the internal logic of the service, just send a simple command and the service will return the necessary data.")
+    description = (welcome+"\n"+tutorial)
+
+    return description
+#http:127.0.0.1:500/employee_record/1 GET on postman, gets the database
+#method: POST, route: /spartan/remove?id=sparta_id
+@flask_object.route("/spartan/add", methods = ["POST"])
+def trainee_add(spartan_id):#query string
+   print("h")
+@flask_object.route("/spartan/<spartan_id>", methods = ["GET"])
+def trainee_record_getter(t_id):
+    data = jsonify(id = t_id, first_name = "first_name", last_name = "last_name", birth_year = "birth_year", birth_month = "birth_month", birth_day = "birth_day", t_course = "t_course",t_stream = "t_stream" )
+
+    return data
+
+@flask_object.route("/echo",methods = ["GET"])
+def echo_func():
+
+    name_var = request.args.get("name")
+    position_var = request.args.get("position")
+    return f"Reply to the user {name_var}- Positon is {position_var}"
+"""
+@flask_object.route("/add/",methods ="POST")
+def add_trainee():
+    trainee_data = request.json
+    t_id = trainee_data["t_id"]
+    first_name = trainee_data["first_name"]
+    last_name = trainee_data["last_name"]
+    birth_year = trainee_data["birth_year"]
+    birth_month = trainee_data["birth_month"]
+    birth_day = trainee_data["birth_day"]
+    t_course = trainee_data["t_course"]
+    t_stream = trainee_data["t_stream"]
+
+    return f"Welcome back : {first_name}\n Here are you details:\nID: {t_id}\nFirst name: {first_name}\n Last name: {last_name}\n Birth Year:{birth_year}, Birth month:{birth_month}\nBirth day: {birth_day}\nCourse: {t_course}\nStream: {t_stream}  "
+"""
+#@flask_object.route()#this API should return the spartan list as one JSON object.
+
+
+if __name__ == "__main__":
+    flask_object.run()
+
+
